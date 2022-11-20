@@ -12,7 +12,7 @@ export default function ContextProvider({ children }) {
   const [value, dispatch] = useReducer(reducer, initialState);
 
     value.searchMovies = (str, type = "all") =>{
-        dispatch({type: 'SEARCH_MOVIES', payload: })
+        dispatch({type: 'SEARCH_MOVIES', payload: str})
     }
 
 
