@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { MainContext } from "../context";
 
 export default function Search(props) {
   const { searchMovies } = props;
-  const [search, setSearch] = useState("");
-  const [type, setType] = useState("all");
+  const { search, setSearch, type, setType } = useContext(MainContext);
 
   const handleKey = (evnt) => {
-    if (evnt.key === "Enter") {
+    if (evnt.key === "Enter" && search.length) {
       searchMovies(search, type);
+    } else if (evnt.key === "Enter" && !search.length) {
+      alert("Enter some text");
     }
   };
 

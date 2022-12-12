@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { MainContext } from "../context";
 import Loader from "../copmponents/Loader";
 import Movies from "../copmponents/Movies";
 import Search from "../copmponents/Search";
 
 export default function Main() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { setMovies, loading, setLoading } = useContext(MainContext);
 
-  const searchMovies = (str, type = "all") => {
+  const searchMovies = (str, type) => {
     setLoading(true);
     fetch(
       `http://www.omdbapi.com/?apikey=329ffa13&s=${str}${
@@ -33,7 +33,7 @@ export default function Main() {
   return (
     <div className="container content">
       <Search searchMovies={searchMovies} />
-      {loading ? <Loader /> : <Movies movies={movies} />}
+      {loading ? <Loader /> : <Movies />}
     </div>
   );
 }

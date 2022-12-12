@@ -1,21 +1,33 @@
 import { createContext, useReducer } from "react";
 import { reducer } from "./reducer";
 
-export const mainContext = createContext();
+export const MainContext = createContext();
 
 const initialState = {
   movies: [],
   loading: true,
+  search: "",
+  type: "all",
 };
 
 export default function ContextProvider({ children }) {
-  const [value, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    value.searchMovies = (str, type = "all") =>{
-        dispatch({type: 'SEARCH_MOVIES', payload: str})
-    }
+  state.setMovies = (data) => {
+    dispatch({ type: "SET_MOVIES", payload: { data } });
+  };
 
+  state.setLoading = (boolen) => {
+    dispatch({ type: "SET_LOADING", payload: boolen });
+  };
 
+  state.setSearch = (str) => {
+    dispatch({ type: "SET_SEARCH", payload: { str } });
+  };
 
-  return <mainContext.Provider value={value}>{children}</mainContext.Provider>;
+  state.setType = (str) => {
+    dispatch({ type: "SET_TYPE", payload: { str } });
+  };
+
+  return <MainContext.Provider value={state}>{children}</MainContext.Provider>;
 }
